@@ -12,7 +12,6 @@ const startTabs = () => {
           children: [
             {
               stack: {
-                id: 'BottomTabsId',
                 children: [{
                   component: {
                     name: 'awesome-place.FindPlaceScreen',
@@ -23,9 +22,14 @@ const startTabs = () => {
                     fontSize: 12,
                     text: 'FindPlace',
                     icon: icons[0],
+                  },
+                  topBar: {
+                    title: {
+                      text: 'Find Place'
+                    }
                   }
                 }
-              }
+              },
             },
             {
               stack: {
@@ -37,6 +41,11 @@ const startTabs = () => {
                         fontSize: 12,
                         text: 'SharePlace',
                         icon: icons[1],
+                      },
+                      topBar: {
+                        title: {
+                          text: 'Share Place'
+                        }
                       }
                     }
                   },
@@ -51,49 +60,3 @@ const startTabs = () => {
 }
 
 export default startTabs;
-  // Navigation.setRoot({
-  //   root: {
-  //     stack: {
-  //       id: 'BottomTabsId',
-  //       children: [
-  //         {
-  //           component: {
-  //             name: 'awesome-place.FindPlaceScreen',
-  //             passProps: {
-  //               text: 'This is tab 1'
-  //             },
-  //             options: {
-  //               topBar: {
-  //                 fontSize: 12,
-  //                 text: 'FindPlace',
-  //                 icon: require('../../assets/icon.png'),
-  //               }
-  //             }
-  //           },
-  //         },
-  //         {
-  //           component: {
-  //             name: 'awesome-place.SharePlaceScreen',
-  //             passProps: {
-  //               text: 'This is tab 2'
-  //             },
-  //             options: {
-  //               topBar: {
-  //                 fontSize: 12,
-  //                 text: 'SharePlace',
-  //                 icon: require('../../assets/icon.png'),
-  //               }
-  //             }
-  //           },
-  //         }
-  //       ],
-  //       options: {
-  //         topBar: {
-  //           title: {
-  //             text: 'Login'
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-  // });
