@@ -15,7 +15,7 @@ Navigation.registerComponentWithRedux("awesome-place.AuthScreen", () => AuthScre
 Navigation.registerComponentWithRedux("awesome-place.FindPlaceScreen", () => FindPlaceScreen, Provider, store);
 Navigation.registerComponentWithRedux("awesome-place.SharePlaceScreen", () => SharePlaceScreen, Provider, store);
 Navigation.registerComponentWithRedux("awesome-place.PlaceDetailScreen", () => PlaceDetailScreen, Provider, store);
-Navigation.registerComponentWithRedux("awesome-place.SideDrawer", () => SideDrawer, Provider, store);
+Navigation.registerComponent("awesome-place.SideDrawer", () => SideDrawer);
 
 //Start App
 Navigation.events().registerAppLaunchedListener(() => {
