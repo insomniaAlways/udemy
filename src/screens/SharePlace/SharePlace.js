@@ -6,21 +6,6 @@ import { addPlace } from '../../../store/actions/index';
 import { Navigation } from 'react-native-navigation';
 
 class SharePlaceScreen extends Component {
-  constructor(props) {
-    super(props);
-    Navigation.events().registerCommandListener((event, jjj, nnnn) => {
-      debugger
-      console.log(event, jjj, nnnn)
-      this.onNavigatorEvent
-    })
-    
-    // Navigator.setOnNavigatorEvent()
-  }
-  
-  onNavigatorEvent = event => {
-    debugger
-    console.log(event)
-  }
   placeAddedhandler = placeName => {
     this.props.onPlaceAdded(placeName)
   }

@@ -9,54 +9,37 @@ const startTabs = () => {
   ]).then((icons) => {
     Navigation.setRoot({
       root: {
-        bottomTabs: {
-          children: [
-            {
-              stack: {
-                children: [{
-                  component: {
-                    name: 'awesome-place.FindPlaceScreen',
-                  },
-                }],
-                options: {
-                  bottomTab: {
-                    fontSize: 12,
-                    text: 'FindPlace',
-                    icon: icons[0],
-                  },
-                  topBar: {
-                    title: {
-                      text: 'Find Place'
-                    },
-                    leftButtons: [
-                      {
-                        id: 'buttonOne',
-                        text: 'Menu',
-                        icon: icons[2]
-                      }
-                    ],
-                  }
-                }
-              },
-            },
-            {
-              stack: {
-                children: [{
-                  component: {
-                    name: 'awesome-place.SharePlaceScreen',
+        sideMenu: {
+          left: {
+            component: {
+              name: 'awesome-place.SideDrawer',
+              visible: false,
+              id: 'sideLeftMenu'
+            }
+          },
+          center: {
+            bottomTabs: {
+              children: [
+                {
+                  stack: {
+                    children: [{
+                      component: {
+                        name: 'awesome-place.FindPlaceScreen',
+                      },
+                    }],
                     options: {
                       bottomTab: {
                         fontSize: 12,
-                        text: 'SharePlace',
-                        icon: icons[1],
+                        text: 'FindPlace',
+                        icon: icons[0],
                       },
                       topBar: {
                         title: {
-                          text: 'Share Place'
+                          text: 'Find Place'
                         },
                         leftButtons: [
                           {
-                            id: 'buttonOne',
+                            id: 'sideDrawerToggle',
                             text: 'Menu',
                             icon: icons[2]
                           }
@@ -64,25 +47,53 @@ const startTabs = () => {
                       }
                     }
                   },
-                }]
-              }
-            }
-          ]
-        },
-        // sideMenu: {
-        //   left: {
-        //     component: {
-        //       name: 'awesome-place.SideDrawer',
-        //     }
-        //   },
-        //   center: {
-        //     component: {
-        //       name: 'awesome-place.SideDrawer',
-        //     }
-        //   }
-        // }
+                },
+                {
+                  stack: {
+                    children: [{
+                      component: {
+                        name: 'awesome-place.SharePlaceScreen',
+                        options: {
+                          bottomTab: {
+                            fontSize: 12,
+                            text: 'SharePlace',
+                            icon: icons[1],
+                          },
+                          topBar: {
+                            title: {
+                              text: 'Share Place'
+                            },
+                            leftButtons: [
+                              {
+                                id: 'sideDrawerToggle',
+                                text: 'Menu',
+                                icon: icons[2]
+                              }
+                            ],
+                          }
+                        }
+                      },
+                    }]
+                  }
+                }
+              ]
+            },
+          }
+        }
       }
     });   
+  }).then(() => {
+    Navigation.events().registerNavigationButtonPressedListener((name, params)  => {
+      if(name.buttonId === "sideDrawerToggle") {
+        Navigation.mergeOptions('sideLeftMenu', {
+          sideMenu: {
+            left: {
+              visible: true
+            }
+          }
+        });
+      }  
+    })
   })
 }
 
