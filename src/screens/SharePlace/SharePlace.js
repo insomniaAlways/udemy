@@ -33,9 +33,9 @@ class SharePlaceScreen extends Component {
           <H1 style={{color:'#008080'}}>Share a Place with us!</H1>
           <PickImage/>
           <PickLocation/>
-          <PlaceInput placeName={this.state.placeName} onChangeText={this.onChangeText}/>
+          <PlaceInput placeName={this.state.placeName} onChangeText={this.onChangeText} style={styles.input}/>
           <View style={styles.buttons}>
-            <Button title="Share the Place!" onPress={this.placeAddedhandler}></Button>
+            <Button title="Share the Place!" onPress={this.placeAddedhandler} style={{borderRadius: 5}}></Button>
           </View>
         </View>
       </ScrollView>
@@ -61,11 +61,15 @@ const styles = StyleSheet.create({
     height: 150
   },
   buttons: {
-    margin: 8
+    margin: 8,
+    borderRadius: 5
   },
   place: {
     width: '100%',
     height: '100%'
+  },
+  input: {
+    width: '80%'
   }
 })
 export default connect(null, mapDispatchToProps)(SharePlaceScreen);

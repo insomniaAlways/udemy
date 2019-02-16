@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     height: 150
   },
   buttons: {
-    margin: 8
+    margin: 8,
+    borderRadius: 5
   },
   place: {
     width: '100%',

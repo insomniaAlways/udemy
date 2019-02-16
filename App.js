@@ -21,20 +21,9 @@ Navigation.registerComponent("awesome-place.SideDrawer", () => SideDrawer);
 Navigation.events().registerAppLaunchedListener(() => {
   Navigation.setRoot({
     root: {
-      stack: {
-        children: [{
-          component: {
-            id: "FindPlaceScreen",
-            name: 'awesome-place.AuthScreen',
-          }
-        }],
-        options: {
-          topBar: {
-            title: {
-              text: 'Login'
-            }
-          }
-        }
+      component: {
+        id: "FindPlaceScreen",
+        name: 'awesome-place.AuthScreen',
       }
     }
   });
