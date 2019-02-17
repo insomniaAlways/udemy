@@ -13,7 +13,6 @@ const startTabs = () => {
           left: {
             component: {
               name: 'awesome-place.SideDrawer',
-              visible: false,
               id: 'sideLeftMenu'
             }
           },
@@ -32,6 +31,7 @@ const startTabs = () => {
                         fontSize: 12,
                         text: 'FindPlace',
                         icon: icons[0],
+                        selectedIconColor: 'red'
                       },
                       topBar: {
                         title: {
@@ -41,7 +41,7 @@ const startTabs = () => {
                           {
                             id: 'sideDrawerToggle',
                             text: 'Menu',
-                            icon: icons[2]
+                            icon: icons[2],
                           }
                         ],
                       }
@@ -58,6 +58,7 @@ const startTabs = () => {
                             fontSize: 12,
                             text: 'SharePlace',
                             icon: icons[1],
+                            selectedIconColor: 'red'
                           },
                           topBar: {
                             title: {
