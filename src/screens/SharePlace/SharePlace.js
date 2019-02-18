@@ -8,21 +8,47 @@ import PickLocation from '../../components/PickLocation/PickLocation';
 
 import { connect } from 'react-redux';
 import { addPlace } from '../../../store/actions/index';
+import validate from '../../utility/validation';
 
 class SharePlaceScreen extends Component {
   state = {
-    placeName: ""
+    placeName: "",
+    controls: {
+      placeName: {
+        value: "",
+        valid: false,
+        touched: false,
+        validationRules: {
+          notEmpty: true
+        }
+      }
+    }
   };
 
-  onChangeText = val => {
-    this.setState({
-      placeName: val
-    });
+  onChangeText = value => {
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          placeName: {
+            ...prevState.controls.placeName,
+            value: value,
+            valid: validate(
+              value,
+              prevState.controls.placeName.validationRules
+            ),
+            touched: true
+          }
+        }
+      }
+    }
+      
+    );
   };
   
   placeAddedhandler = () => {
-    if (this.state.placeName.trim() !== "") {
-      this.props.onPlaceAdded(this.state.placeName)
+    if (this.state.controls.placeName.valid) {
+      this.props.onPlaceAdded(this.state.controls.placeName.value)
     }
   }
 
@@ -33,9 +59,9 @@ class SharePlaceScreen extends Component {
           <H1 style={{color:'#008080'}}>Share a Place with us!</H1>
           <PickImage/>
           <PickLocation/>
-          <PlaceInput placeName={this.state.placeName} onChangeText={this.onChangeText} style={styles.input}/>
+          <PlaceInput valid={this.state.controls.placeName.valid} touched={this.state.controls.placeName.touched} placeName={this.state.controls.placeName.value} onChangeText={this.onChangeText} style={styles.input}/>
           <View style={styles.buttons}>
-            <Button title="Share the Place!" onPress={this.placeAddedhandler} style={{borderRadius: 5}}></Button>
+            <Button title="Share the Place!" disabled={!this.state.controls.placeName.valid} onPress={this.placeAddedhandler} style={{borderRadius: 5}}></Button>
           </View>
         </View>
       </ScrollView>
