@@ -30,6 +30,10 @@ class PickImage extends Component {
         locationChoosen: true
       }
     })
+    this.props.onPickedLocation({
+      latitude: coords.latitude,
+      longitude: coords.longitude
+    })
   }
 
   getLocation = () => {

@@ -4,6 +4,7 @@ import Icons from 'react-native-vector-icons/Ionicons';
 import { connect } from 'react-redux';
 import { deletePlace } from '../../../store/actions/index';
 import { Navigation } from 'react-native-navigation';
+import MapView, { Marker } from 'react-native-maps';
 
 class PlaceDetails extends Component {
   state = {
@@ -32,6 +33,20 @@ class PlaceDetails extends Component {
 
   render() {
     let image = <Image source={this.props.place.image} style={styles.image}/>
+    let mapCoordinate = {
+      latitude: this.props.place.location.latitude,
+      longitude: this.props.place.location.longitude,
+      latitudeDelta: 0.0122,
+      longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122
+    }
+    let map = (
+      <MapView initialRegion={mapCoordinate} style={styles.map}>
+        <Marker coordinate={{
+          latitude: mapCoordinate.latitude,
+          longitude: mapCoordinate.longitude
+        }}/>
+      </MapView>
+    )
     let text = <Text style={styles.text}>{this.props.place.name}</Text>
     let deleteButton = (
       <TouchableOpacity onPress={this.placeDeleteHandler}>
@@ -39,17 +54,23 @@ class PlaceDetails extends Component {
       </TouchableOpacity>
     )
     let landscapeMode = (
-      <View style={styles.landscapeMode}>
-        <View style={styles.landscapeModeDetails}>
-          <View>{text}</View>
-          <View>{deleteButton}</View>
+      <View>
+        <View style={styles.landscapeModeView}>
+          <View style={styles.landscapeModeDetails}>
+            <View>{text}</View>
+            <View>{deleteButton}</View>
+          </View>
+          <View style={[styles.landscapeModeDetails]}>
+            <View style={styles.landscapeImage}>{image}</View>
+            <View style={styles.landscapeMap}>{map}</View>
+          </View>
         </View>
-        <View style={styles.landscapeModeImage}>{image}</View>
       </View>
     )
     let portraitMode = (
       <View style={styles.container}>
         <View>{image}</View>
+        <View>{map}</View>
         <View>{text}</View>
         <View style={{alignItems: 'center'}}>{deleteButton}</View>
       </View>
@@ -79,19 +100,32 @@ const styles = StyleSheet.create({
     backgroundColor: "red"
   },
   landscapeMode: {
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%',
+    flexDirection: 'row',
   },
   landscapeModeDetails: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 8,
-    width: "60%",
+    width: "90%",
   },
-  landscapeModeImage: {
-    width: "60%",
+  landscapeModeView: {
+    width: "90%",
     height: '90%',
     margin: 8,
-    alignItems: 'center'
+  },
+  landscapeMap: {
+    width: '40%',
+    height: '90%'
+  },
+  landscapeImage: {
+    width: '40%',
+    height: '90%'
+  },
+  map: {
+    width: '100%',
+    height: 200
   }
 
 })

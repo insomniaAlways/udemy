@@ -21,8 +21,13 @@ class SharePlaceScreen extends Component {
         validationRules: {
           notEmpty: true
         }
+      },
+      location: {
+        value: null,
+        valid: false
       }
-    }
+    },
+
   };
 
   onChangeText = value => {
@@ -47,9 +52,24 @@ class SharePlaceScreen extends Component {
   };
   
   placeAddedhandler = () => {
-    if (this.state.controls.placeName.valid) {
-      this.props.onPlaceAdded(this.state.controls.placeName.value)
-    }
+    // if (this.state.controls.placeName.valid) {
+      this.props.onPlaceAdded(this.state.controls.placeName.value, this.state.controls.location.value)
+    // }
+  }
+
+  onLocationAddedHandler = location => {
+    this.setState(prevState => {
+      return {
+        controls: {
+          ...prevState.controls,
+          location: {
+            value: location,
+            valid: true
+          }
+
+        }
+      }
+    })
   }
 
   render() {
@@ -58,10 +78,12 @@ class SharePlaceScreen extends Component {
         <View style={styles.container}>
           <H1 style={{color:'#008080'}}>Share a Place with us!</H1>
           <PickImage/>
-          <PickLocation/>
+          <PickLocation onPickedLocation={this.onLocationAddedHandler}/>
           <PlaceInput valid={this.state.controls.placeName.valid} touched={this.state.controls.placeName.touched} placeName={this.state.controls.placeName.value} onChangeText={this.onChangeText} style={styles.input}/>
           <View style={styles.buttons}>
-            <Button title="Share the Place!" disabled={!this.state.controls.placeName.valid} onPress={this.placeAddedhandler} style={{borderRadius: 5}}></Button>
+            <Button title="Share the Place!"
+              disabled={!this.state.controls.placeName.valid || !this.state.controls.location.valid} 
+              onPress={this.placeAddedhandler} style={{borderRadius: 5}}></Button>
           </View>
         </View>
       </ScrollView>
@@ -70,7 +92,7 @@ class SharePlaceScreen extends Component {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    onPlaceAdded: (placeName) => dispatch(addPlace(placeName))
+    onPlaceAdded: (placeName, location) => dispatch(addPlace(placeName, location))
   }
 }
 
