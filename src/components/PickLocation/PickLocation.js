@@ -1,15 +1,71 @@
 import React, { Component } from 'react';
-import {View, StyleSheet, Image, Button, Text} from 'react-native';
+import {View, StyleSheet, Image, Button, Text, Dimensions} from 'react-native';
+import MapView, { Marker, AnimatedRegion } from 'react-native-maps';
 
 class PickImage extends Component {
+  state= {
+    focusedLocation: {
+      latitude: 12.972442,
+      longitude: 77.580643,
+      latitudeDelta: 0.0122,
+      longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122
+    },
+    locationChoosen: false
+  }
+  pickLocation = event => {
+    const coords = event.nativeEvent.coordinate
+    console.log(coords)
+    this.map.animateToRegion({
+      ...this.state.focusedLocation,
+      latitude: coords.latitude,
+      longitude: coords.longitude
+    })
+    this.setState(prevState => {
+      return {
+        focusedLocation: {
+          ...prevState.focusedLocation,
+          latitude: coords.latitude,
+          longitude: coords.longitude
+        },
+        locationChoosen: true
+      }
+    })
+  }
+
+  getLocation = () => {
+    navigator.geolocation.getCurrentPosition(res => {
+      console.log(res)
+      const coords = {
+        nativeEvent: {
+          coordinate: {
+            latitude: res.coords.latitude,
+            longitude: res.coords.longitude,
+          }
+        }
+      }
+      this.pickLocation(coords)
+    },
+    rej => {
+      console.log(rej)
+    })
+  }
   render() {
+    let marker;
+    if(this.state.locationChoosen) {
+      marker = <Marker coordinate={this.state.focusedLocation}/>
+    }
     return (
       <View style={styles.container}>
-        <View style={styles.placeholder}>
-          <Text>Map</Text>
-        </View>
+        <MapView 
+          initialRegion={this.state.focusedLocation}
+          style={styles.map}
+          onPress={this.pickLocation}
+          ref={ref => this.map = ref}
+        >
+          {marker}
+        </MapView>
         <View style={styles.buttons}>
-          <Button title="Locate me" onPress={() => alert('Pick Image')}></Button>
+          <Button title="Locate me" onPress={this.getLocation}></Button>
         </View>
       </View>
     )
@@ -22,10 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%'
   },
-  placeholder: {
-    borderWidth: 1,
-    borderColor: 'black',
-    backgroundColor: '#eee',
+  map: {
     width: '80%',
     height: 150
   },
