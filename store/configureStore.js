@@ -2,9 +2,11 @@ import Redux, { createStore, combineReducers, compose, applyMiddleware } from 'r
 import thunk from 'redux-thunk';
 
 import placesReducer from './reducers/places';
+import loaderReducer from './reducers/loader';
 
 const rootReducer = combineReducers({
-  places: placesReducer
+  places: placesReducer,
+  loader: loaderReducer 
 });
 
 let composeEnhancers = compose;

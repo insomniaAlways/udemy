@@ -3,6 +3,7 @@ import { View, TouchableOpacity, StyleSheet, Text, Animated } from 'react-native
 import { connect } from 'react-redux';
 import PlaceList from '../../components/PlaceList/PlaceList';
 import { Navigation } from 'react-native-navigation';
+import { getPlace } from '../../../store/actions/index'
 
 class FindPlaceScreen extends Component {
   state = {
@@ -21,6 +22,11 @@ class FindPlaceScreen extends Component {
   }
 
   componentDidDisappear() {
+    this.props.onGetPlaces()
+  }
+
+  componentDidMount() {
+
   }
 
   placesLoadedHandler = () => {
@@ -124,10 +130,14 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start'
   }
 })
-
+const mapDispatchToProps = dispatach => {
+  return {
+    onGetPlaces : dispatach(getPlace())
+  }
+}
 const mapStateToProps = state => {
   return {
     places: state.places.places
   }
 }
-export default connect(mapStateToProps)(FindPlaceScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(FindPlaceScreen);

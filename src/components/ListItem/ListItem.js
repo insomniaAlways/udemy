@@ -5,7 +5,7 @@ const listItem = (props) => (
   <TouchableNativeFeedback onPress={props.onItemPressed}>
     <View style={styles.listItem}>
     <Image source={props.placeImage} style={styles.image}/>
-      <Text>{props.placeName}</Text>
+      <Text style={styles.text}>{props.placeName}</Text>
     </View>
   </TouchableNativeFeedback>
 );
@@ -15,11 +15,16 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 10,
     marginBottom: 5,
-    backgroundColor: "#eee"
+    backgroundColor: "#eee",
+    flexDirection: 'row'
   },
   image : {
     height: 30,
-    width: 30
+    width: 30,
+    marginRight: 8
+  },
+  text: {
+    paddingTop: 5
   }
 })
 export default listItem;
