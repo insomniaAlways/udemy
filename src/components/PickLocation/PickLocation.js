@@ -14,7 +14,6 @@ class PickImage extends Component {
   }
   pickLocation = event => {
     const coords = event.nativeEvent.coordinate
-    console.log(coords)
     this.map.animateToRegion({
       ...this.state.focusedLocation,
       latitude: coords.latitude,
@@ -38,7 +37,6 @@ class PickImage extends Component {
 
   getLocation = () => {
     navigator.geolocation.getCurrentPosition(res => {
-      console.log(res)
       const coords = {
         nativeEvent: {
           coordinate: {
@@ -48,9 +46,6 @@ class PickImage extends Component {
         }
       }
       this.pickLocation(coords)
-    },
-    rej => {
-      console.log(rej)
     })
   }
   render() {

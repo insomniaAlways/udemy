@@ -1,4 +1,6 @@
-import Redux, { createStore, combineReducers, compose } from 'redux';
+import Redux, { createStore, combineReducers, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+
 import placesReducer from './reducers/places';
 
 const rootReducer = combineReducers({
@@ -12,7 +14,7 @@ if(__DEV__) {
 }
 
 const configureStore = () => {
-  return createStore(rootReducer, composeEnhancers());
+  return createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
 };
 
 export default configureStore; 
